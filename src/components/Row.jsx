@@ -40,7 +40,7 @@ const Row = ({ title, fetchURL }) => {
                   {like ? (
                     <FaHeart className="absolute top-4 left-4 text-gray-300" />
                   ) : (
-                    <FaRegHeart />
+                    <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
                   )}
                 </p>
               </div>
