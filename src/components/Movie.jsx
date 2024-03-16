@@ -60,6 +60,46 @@ const Movie = ({ item }) => {
     }
   };
 
+  // Define a function to map genre IDs to categories
+  const mapGenreToCategory = (genreIds) => {
+    // Define mappings for genre IDs to categories
+    const categoryMappings = {
+      28: "Film", // Action
+      12: "Film", // Adventure
+      16: "Cartoon", // Animation
+      35: "Film", // Comedy
+      80: "TV", // Crime
+      99: "Film", // Documentary
+      18: "Film", // Drama
+      10751: "Kids", // Family
+      14: "Film", // Fantasy
+      36: "Film", // History
+      27: "Film", // Horror
+      10402: "Film", // Music
+      9648: "Film", // Mystery
+      10749: "Film", // Romance
+      878: "Film", // Science Fiction
+      10770: "TV", // TV Movie
+      53: "Film", // Thriller
+      10752: "Film", // War
+      37: "Film", // Western
+    };
+
+    // Map each genre ID to its corresponding category
+    const categories = genreIds.map((genreId) => categoryMappings[genreId]);
+
+    // Return unique categories
+    return [...new Set(categories)];
+  };
+
+  // Extract genres from item
+  const genres = item?.genre_ids || [];
+
+  // Get categories for the movie or show
+  const categories = mapGenreToCategory(genres);
+
+  // const genres = item?.genre_ids.map((genreId) => categoryMappings[genreId]);
+
   return (
     <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
       <img
@@ -78,6 +118,19 @@ const Movie = ({ item }) => {
         >
           {item?.title}
         </p>
+        {/* Display categories on the image */}
+        <div className="absolute top-0 right-0">
+          {categories.map((category) => (
+            <span
+              key={category}
+              className="bg-black text-white text-xs px-1 py-0.5 m-1 rounded-md absolute"
+              style={{ top: "5px", right: "2px" }} // Adjust position as needed
+            >
+              {category}
+            </span>
+          ))}
+        </div>
+        {/* Display bookmark icon */}
         <p onClick={saveShow}>
           {/* {like ? (
             <FaBookmark className="absolute top-4 left-4 text-red-600" />
