@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import {
   arrayUnion,
@@ -12,6 +12,8 @@ import {
 } from "firebase/firestore";
 
 const Movie = ({ item }) => {
+  const navigate = useNavigate();
+
   // const [like, setLike] = useState(false);
   const [saved, setSaved] = useState(false);
   const { user } = UserAuth();
@@ -56,7 +58,14 @@ const Movie = ({ item }) => {
         savedShows: saved ? arrayRemove(item.id) : arrayUnion(item),
       });
     } else {
-      alert("Please log in to save a movie ");
+      //alert("Please log in to save a movie ");
+      const shouldSave = window.confirm(
+        "Please log in to save a recipe. Do you want to sign in?"
+      );
+
+      if (shouldSave) {
+        navigate("/login");
+      }
     }
   };
 
@@ -101,7 +110,10 @@ const Movie = ({ item }) => {
   // const genres = item?.genre_ids.map((genreId) => categoryMappings[genreId]);
 
   return (
-    <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
+    <Link
+      to={"/MovieDetails"}
+      className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2"
+    >
       <img
         src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
         alt={item?.title}
@@ -132,11 +144,6 @@ const Movie = ({ item }) => {
         </div>
         {/* Display bookmark icon */}
         <p onClick={saveShow}>
-          {/* {like ? (
-            <FaBookmark className="absolute top-4 left-4 text-red-600" />
-          ) : (
-            <FaRegBookmark className="absolute top-4 left-4 text-gray-300" />
-          )} */}
           {saved ? (
             <FaBookmark className="absolute top-4 left-4 text-red-600" />
           ) : (
@@ -144,7 +151,7 @@ const Movie = ({ item }) => {
           )}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
