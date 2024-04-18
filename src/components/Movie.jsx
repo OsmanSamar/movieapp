@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+//import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import {
   arrayUnion,
@@ -112,8 +113,8 @@ const Movie = ({ item }) => {
   // const genres = item?.genre_ids.map((genreId) => categoryMappings[genreId]);
 
   return (
-    <Link
-      to={`/MovieDetails/${item.id}`}
+    <div
+      // Link to={`/MovieDetails/${item.id}`}
       className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2"
     >
       <img
@@ -153,7 +154,7 @@ const Movie = ({ item }) => {
           )}
         </p>
       </div>
-    </Link>
+    </div>
   );
 };
 

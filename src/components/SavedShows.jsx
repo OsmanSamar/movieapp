@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+//import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { UserAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { updateDoc, doc, onSnapshot } from "firebase/firestore";
@@ -9,14 +9,14 @@ const SavedShows = () => {
   const [movies, setMovies] = useState([]);
   const { user } = UserAuth();
 
-  const slideLeft = () => {
-    var slider = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft - 500;
-  };
-  const slideRight = () => {
-    var slider = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft + 500;
-  };
+  // const slideLeft = () => {
+  //   var slider = document.getElementById("slider");
+  //   slider.scrollLeft = slider.scrollLeft - 500;
+  // };
+  // const slideRight = () => {
+  //   var slider = document.getElementById("slider");
+  //   slider.scrollLeft = slider.scrollLeft + 500;
+  // };
 
   useEffect(() => {
     onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
