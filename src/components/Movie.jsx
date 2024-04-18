@@ -51,7 +51,7 @@ const Movie = ({ item }) => {
 
     fetchSavedShows();
   }, [user, item]);
-  const websiteName = "MovieAPP";
+  const websiteName = "MovieApp";
 
   const saveShow = async () => {
     if (user?.email) {
