@@ -13,11 +13,28 @@ const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState({});
 
-  function signUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
-    setDoc(doc(db, "users", email), {
-      savedShows: [],
-    });
+  // function signUp(email, password) {
+  //   createUserWithEmailAndPassword(auth, email, password);
+  //   setDoc(doc(db, "users", email), {
+  //     savedShows: [],
+  //   });
+  // }
+
+  async function signUp(email, password) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await setDoc(doc(db, "users", user.email), {
+        savedShows: [],
+      });
+    } catch (error) {
+      console.error("Error signing up:", error);
+      throw error; // Re-throw the error to be caught by the calling function
+    }
   }
 
   function logIn(email, password) {
