@@ -50,6 +50,7 @@ const Movie = ({ item }) => {
 
     fetchSavedShows();
   }, [user, item]);
+  const websiteName = "MovieAPP";
 
   const saveShow = async () => {
     if (user?.email) {
@@ -60,7 +61,8 @@ const Movie = ({ item }) => {
     } else {
       //alert("Please log in to save a movie ");
       const shouldSave = window.confirm(
-        "Please log in to save a recipe. Do you want to sign in?"
+        // "Please log in to save a movie  . Do you want to sign in?"
+        `Please log in to save a movie on ${websiteName}. Do you want to sign in?`
       );
 
       if (shouldSave) {
@@ -111,7 +113,7 @@ const Movie = ({ item }) => {
 
   return (
     <Link
-      to={"/MovieDetails"}
+      to={`/MovieDetails/${item.id}`}
       className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2"
     >
       <img

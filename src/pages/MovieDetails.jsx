@@ -1,42 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+//import Movie from "../components/Movie";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const MovieDetails = ({ item }) => {
-  // Check if movie data is available
-  if (!item) {
-    return <div>No movie details available.</div>;
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  // const [showDetails, setShowDetails] = useState(false);
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=YOUR_API_KEY&language=en-US`
+        );
+        setMovie(response.data);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
+    };
+
+    fetchMovieDetails();
+  }, [id]);
+
+  if (!movie) {
+    return <div>Loading...</div>;
   }
-  const posterUrl = `https://image.tmdb.org/t/p/w500/${item.poster_path}`;
+
+  // const handleClick = () => {
+  //   setShowDetails(!showDetails);
+  // };
 
   return (
+    // <div className="movie-card" onClick={handleClick}>
+    //   <img src={item.poster_path} alt={item.title} />
+    //   <h3>{item.title}</h3>
+    //   {showDetails && <Movie item={item} />}
+    // </div>
     <div>
-      {/* <h1>{movie.title}</h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-        alt={movie.title}
-      />
-      <p>{movie.overview}</p> */}
-
-      {/* <video controls>
-        <source src={movie.videoUrl} type="video/mp4" />
-      </video> */}
-      <div>
-        <h1>{item.title}</h1>
-        <img src={posterUrl} alt={item.title} />
-        <p>{item.overview}</p>
-        {item.video ? (
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${item.video}`}
-            title={item.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        ) : (
-          <div>No video available for this movie.</div>
-        )}
-      </div>
+      <h1>{movie.title}</h1>
+      <p>{movie.overview}</p>
     </div>
   );
 };
